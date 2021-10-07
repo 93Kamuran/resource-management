@@ -7,7 +7,26 @@ export default new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/', name: 'home', component: () => import('./views/Start.vue')
+            path: '/',
+            name: 'home'
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: () => import('./views/Login/index')
+        },
+        {
+            path: '/pdf-resources',
+            name: 'pdf-resources',
+            meta: { layout: 'default' },
+            props:true,
+            component: () => import('./views/Resources/Pdf/index')
+        },
+        {
+            path: '/pdf-resources/create',
+            name: 'pdf-resource-create',
+            meta: { layout: 'default' },
+            component: () => import('./views/Resources/Pdf/create')
         }
     ]
 })
