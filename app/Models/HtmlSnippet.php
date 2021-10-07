@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class HtmlSnippet extends Model
 {
     use HasFactory;
+
+
+    protected $table = 'html_snippets';
+    protected $guarded = [];
 }

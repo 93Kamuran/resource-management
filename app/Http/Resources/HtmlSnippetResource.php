@@ -23,8 +23,8 @@ class HtmlSnippetResource extends JsonResource
                 'type' => 'html-snippets',
                 'attributes' => [
                     'title' => $this->title,
-                    'description' => url($this->description),
-                    'html' => url($this->html),
+                    'description' => $this->description,
+                    'html' => $this->html,
                     'created' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
                     'modified' => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s')
                 ],

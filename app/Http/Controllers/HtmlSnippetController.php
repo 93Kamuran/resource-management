@@ -2,84 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HtmlSnippetRequest;
+use App\Http\Resources\HtmlSnippetResource;
 use App\Models\HtmlSnippet;
+use App\Services\HtmlSnippetService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class HtmlSnippetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private HtmlSnippetService $htmlSnippetService;
+
+    public function __construct(HtmlSnippetService $htmlSnippetService)
     {
-        //
+        $this->htmlSnippetService = $htmlSnippetService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request): AnonymousResourceCollection
     {
-        //
+        return HtmlSnippetResource::collection($this->htmlSnippetService->getHtmlSnippets($request));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(HtmlSnippetRequest $request): HtmlSnippetResource
     {
-        //
+        return HtmlSnippetResource::make($this->htmlSnippetService->createHtmlSnippet($request));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\HtmlSnippet  $htmlSnippet
-     * @return \Illuminate\Http\Response
-     */
-    public function show(HtmlSnippet $htmlSnippet)
+    public function update(HtmlSnippetRequest $request, HtmlSnippet $htmlSnippet): HtmlSnippetResource
     {
-        //
+        return HtmlSnippetResource::make($this->htmlSnippetService->updateHtmlSnippet($htmlSnippet, $request));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\HtmlSnippet  $htmlSnippet
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(HtmlSnippet $htmlSnippet)
+    public function destroy(HtmlSnippet $htmlSnippet): JsonResponse
     {
-        //
+        $this->htmlSnippetService->deleteHtmlSnippet($htmlSnippet);
+        return response()->json(null, 204);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HtmlSnippet  $htmlSnippet
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, HtmlSnippet $htmlSnippet)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\HtmlSnippet  $htmlSnippet
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(HtmlSnippet $htmlSnippet)
-    {
-        //
-    }
 }
