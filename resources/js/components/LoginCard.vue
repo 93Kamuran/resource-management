@@ -14,14 +14,14 @@
                             <div class="justify-center my-6 ">
                                 <custom-button
                                     buttonClass="w-full flex-auto pt-1 text-center text-white h-12 rounded px-6 font-bold bg-gray-700"
-                                    @click="setUser('admin')">Create
+                                    @click="setUser('admin')">
                                     I'm an Admin !
                                 </custom-button>
                             </div>
                             <div class="justify-center my-6">
                                 <custom-button
                                     buttonClass="w-full flex-auto pt-1 text-center text-white h-12 rounded px-6 font-bold bg-gray-700"
-                                    @click="setUser('visitor')">Create
+                                    @click="setUser('visitor')">
                                     Continue as
                                     Visitor
                                 </custom-button>
