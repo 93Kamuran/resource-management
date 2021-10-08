@@ -4,7 +4,7 @@
             <custom-icon name="file-pdf" width="auto" height="3rem"/>
         </div>
         <div class="w-full pl-2 mt-2 text-left">
-            <a class="hover:text-blue-400" @click="download">Download</a>
+            <a class="hover:text-blue-400 cursor-pointer" @click="download">Download</a>
         </div>
 
     </div>

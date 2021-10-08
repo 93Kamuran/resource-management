@@ -1,8 +1,8 @@
 <template>
     <div>
         <div :class="frameClass">
-            <label v-if="type !=='file'" :for="label"
-                   class="text-gray-700 select-none font-medium text-left pl-2">{{ label }}</label>
+            <label :for="label"
+                   class="text-gray-700 select-none font-medium text-left pl-2">{{ label}}</label>
             <input
                 id="default"
                 :value="value"

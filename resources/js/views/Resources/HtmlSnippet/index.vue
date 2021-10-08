@@ -3,11 +3,10 @@
         <div v-if="snippets.length>0" class="w-full h-full bg-gray-50
              text-center border space-y-4 text-gray-600 pt-12">
             <index-container   :route-to="{ name: 'html-snippet-create' }"/>
-            <div v-if="userType==='admin'" class="flex w-full py-12 px-4">
+            <div v-if="userType==='admin'" class="flex w-full">
                 <div v-if="isEditing" class="w-full  justify-center">
                     <html-snippet-form :snippet="snippet" @submit="submitForm(snippet)" @clear="clearForm"/>
                 </div>
-
             </div>
             <custom-card
                 resource-type="snippet"
@@ -55,7 +54,7 @@ export default {
     },
     data: () => {
         return {
-            cardClass: 'border-solid border-2 border-blue-500 h-96',
+            cardClass: 'border-solid border-2 border-green-500 h-96',
             routeName: 'html-snippets',
             isEditing: false,
             snippet: {

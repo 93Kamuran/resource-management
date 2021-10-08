@@ -15,7 +15,7 @@
                              class="block md:inline-block text-sm px-4 py-2   rounded text-white border-white  hover:text-green-500 md:mt-0">
                     Html Snippets
                 </router-link>
-                <router-link to="/"
+                <router-link :to="{ name: 'links', query: { limit:pagination.limit, page: 1 } }"
                              :class="currentTab('links')"
                              class="block md:inline-block text-sm px-4 py-2   rounded text-white border-white   hover:text-green-500 md:mt-0">
                     Links
