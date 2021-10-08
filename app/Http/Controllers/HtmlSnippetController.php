@@ -21,22 +21,22 @@ class HtmlSnippetController extends Controller
 
     public function index(Request $request): AnonymousResourceCollection
     {
-        return HtmlSnippetResource::collection($this->htmlSnippetService->getHtmlSnippets($request));
+        return HtmlSnippetResource::collection($this->htmlSnippetService->get($request->get('limit')));
     }
 
     public function store(HtmlSnippetRequest $request): HtmlSnippetResource
     {
-        return HtmlSnippetResource::make($this->htmlSnippetService->createHtmlSnippet($request));
+        return HtmlSnippetResource::make($this->htmlSnippetService->create($request->all()));
     }
 
     public function update(HtmlSnippetRequest $request, HtmlSnippet $htmlSnippet): HtmlSnippetResource
     {
-        return HtmlSnippetResource::make($this->htmlSnippetService->updateHtmlSnippet($htmlSnippet, $request));
+        return HtmlSnippetResource::make($this->htmlSnippetService->update($htmlSnippet, $request->all()));
     }
 
     public function destroy(HtmlSnippet $htmlSnippet): JsonResponse
     {
-        $this->htmlSnippetService->deleteHtmlSnippet($htmlSnippet);
+        $this->htmlSnippetService->delete($htmlSnippet);
         return response()->json(null, 204);
     }
 

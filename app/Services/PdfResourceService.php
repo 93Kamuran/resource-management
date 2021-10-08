@@ -4,45 +4,38 @@
 namespace App\Services;
 
 
-use App\Repositories\PdfResourceRepository;
+use App\Models\PdfResource;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class PdfResourceService
+class PdfResourceService implements IResourceService
 {
 
-    private PdfResourceRepository $pdfFileRepository;
-
-    public function __construct(PdfResourceRepository $pdfFileRepository)
+    public function get($limit): LengthAwarePaginator
     {
-        $this->pdfFileRepository = $pdfFileRepository;
+        return PdfResource::query()->orderByDesc('id')->paginate($limit);
     }
 
-    public function getPdfResources($request): LengthAwarePaginator
-    {
-        $limit = $request->get('limit');
-        return $this->pdfFileRepository->list($limit);
-    }
-
-
-    public function createPdfResource($postData): Model|Builder
+    public function create($postData): Model|Builder
     {
         $path = $postData['file']->store('pdf-files', 'public');
-        return $this->pdfFileRepository->create(['title' => $postData['title'], 'path' => $path]);
+        return PdfResource::query()->create(['title' => $postData['title'], 'path' => $path]);
+
     }
 
-    public function updatePdfResource($pdfResource, $postData)
+    public function update($pdfResource, $putData)
     {
         Storage::disk('public')->delete($pdfResource->path);
-        $path = $postData['file']->store('pdf-files', 'public');
-        return $this->pdfFileRepository->update($pdfResource, ['title' => $postData['title'], 'path' => $path]);
+        $path = $putData['file']->store('pdf-files', 'public');
+        $pdfResource->update(['title' => $putData['title'], 'path' => $path]);
+        return $pdfResource->fresh();
     }
 
-    public function deletePdfFile($pdfFile)
+    public function delete($pdfResource)
     {
-        Storage::disk('public')->delete($pdfFile->path);
-        return $this->pdfFileRepository->delete($pdfFile);
+        Storage::disk('public')->delete($pdfResource->path);
+        return $pdfResource->delete();
     }
 }

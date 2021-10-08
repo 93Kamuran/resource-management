@@ -4,38 +4,34 @@
 namespace App\Services;
 
 
-use App\Repositories\HtmlSnippetRepository;
+use App\Models\HtmlSnippet;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class HtmlSnippetService
+class HtmlSnippetService implements IResourceService
 {
-    private HtmlSnippetRepository $htmlSnippetRepository;
 
-    public function __construct(HtmlSnippetRepository $htmlSnippetRepository)
+    public function get($limit): LengthAwarePaginator
     {
-        $this->htmlSnippetRepository = $htmlSnippetRepository;
+        return HtmlSnippet::query()->orderByDesc('id')->paginate($limit);
     }
 
-    public function createHtmlSnippet($postData): Model|Builder
+    public function create($postData): Model|Builder
     {
-        return $this->htmlSnippetRepository->create($postData->all());
+        return HtmlSnippet::query()->create($postData);
     }
 
-    public function updateHtmlSnippet($htmlSnippet, $postData)
+    public function update($htmlSnippet, $putData)
     {
-        return $this->htmlSnippetRepository->update($htmlSnippet, $postData->all());
+        $htmlSnippet->update($putData);
+        return $htmlSnippet->fresh();
     }
 
-    public function deleteHtmlSnippet($htmlSnippet)
+    public function delete($htmlSnippet)
     {
-        return $this->htmlSnippetRepository->delete($htmlSnippet);
+        return $htmlSnippet->delete();
     }
 
-    public function getHtmlSnippets($request): LengthAwarePaginator
-    {
-        $limit = $request->get('limit');
-        return $this->htmlSnippetRepository->list($limit);
-    }
+
 }

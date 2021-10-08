@@ -27,23 +27,23 @@ class PdfResourceController extends Controller
 
     public function index(Request $request): AnonymousResourceCollection
     {
-        return PdfResourcesResource::collection($this->pdfResourceService->getPdfResources($request));
+        return PdfResourcesResource::collection($this->pdfResourceService->get($request->get('limit')));
     }
 
     public function store(PdfResourceRequest $request): PdfResourcesResource
     {
 
-        return PdfResourcesResource::make($this->pdfResourceService->createPdfResource($request));
+        return PdfResourcesResource::make($this->pdfResourceService->create($request));
     }
 
     public function update(PdfResourceRequest $request,PdfResource $pdfResource): PdfResourcesResource
     {
-        return PdfResourcesResource::make($this->pdfResourceService->updatePdfResource($pdfResource, $request));
+        return PdfResourcesResource::make($this->pdfResourceService->update($pdfResource, $request));
     }
 
     public function destroy(PdfResource $pdfResource): JsonResponse
     {
-        $this->pdfResourceService->deletePdfFile($pdfResource);
+        $this->pdfResourceService->delete($pdfResource);
         return response()->json(null, 204);
     }
 
