@@ -1,14 +1,8 @@
 <template>
     <div class="w-full h-full bg-gray-50
              text-center border space-y-4 text-gray-600 pt-12">
-        <div class="w-full flex justify-end pr-5">
-            <router-link
-                tag="button"
-                :to="{ name: 'pdf-resources',query:{limit:pagination.limit,page:pagination.page},params:{page:pagination.page} }"
-                class="w-3/12 p-1 items-center text-white rounded-lg bg-green-500">
-                <custom-icon name="long-arrow-alt-left" width="2rem" height="2rem" class="pt-1"/>
-            </router-link>
-
+        <div class="w-full  justify-center">
+            <index-container  :has-back-page="true" :route-to="{ name: 'pdf-resources',query:{limit:pagination.limit,page:pagination.page},params:{page:pagination.page} }"/>
         </div>
         <pdf-resource-form :pdf-resource="pdfResource" @submit="submitForm(pdfResource)" @clear="clearForm"/>
     </div>
@@ -22,14 +16,15 @@ import { mapGetters } from 'vuex'
 import CustomIcon from '../../../components/CustomIcon'
 import EventBus from '../../../event-bus'
 import PdfResourceForm from '../../../components/PdfResourceForm'
-
+import IndexContainer from '../../../components/IndexContainer'
 export default {
     name: 'Create',
     components: {
         PdfResourceForm,
         CustomInput,
         CustomButton,
-        CustomIcon
+        CustomIcon,
+        IndexContainer
     },
     data: () => {
         return {
@@ -51,10 +46,10 @@ export default {
                         query: { limit: this.pagination.limit, page: this.pagination.page },
                         params: { page: this.pagination.page }
                     }).catch(error => {
-                        if (error.name !== "NavigationDuplicated") {
-                            throw error;
+                        if (error.name !== 'NavigationDuplicated') {
+                            throw error
                         }
-                    });
+                    })
                     this.refreshPdfResource()
 
                 })
@@ -81,7 +76,6 @@ export default {
             userType: 'user/getUserType',
             pagination: 'paginate/getPagination'
         }),
-
     }
 }
 </script>

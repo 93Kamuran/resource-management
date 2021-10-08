@@ -1,36 +1,23 @@
 <template>
     <div>
-
         <div v-if="resources.length>0"
              class="w-full h-full bg-gray-50
              text-center border space-y-4 text-gray-600 pt-12">
-            <div v-if="userType==='admin'" class="flex w-full py-12 px-4">
-                <div v-if="isEditing" class="w-full  justify-center">
-                    <pdf-resource-form :pdf-resource="pdfResource" @submit="submitForm(pdfResource)"
-                                       @clear="clearForm"/>
-                </div>
-                <div v-if="!isEditing" class="w-full flex justify-center">
-                    <div class="w-1/2 justify-center">
-                        <h2 class="text-2xl font-extrabold justify-start">
-                            <span class="block">Create New Resource</span>
-                        </h2>
-                    </div>
-                    <div class="w-1/2 justify-center">
-                        <router-link
-                            tag="button"
-                            :to="{ name: 'pdf-resource-create' }"
-                            class="w-3/12 p-1 items-center text-white rounded-lg bg-green-500">
-                            <custom-icon name="plus" width="2rem" height="2rem" class="pt-1"/>
-                        </router-link>
-
-                    </div>
-                </div>
-
+            <index-container :route-to="{ name: 'pdf-resource-create' }"/>
+            <div v-if="isEditing&&userType==='admin' " class="w-full justify-center">
+                <pdf-resource-form :pdf-resource="pdfResource" @submit="submitForm(pdfResource)"
+                                   @clear="clearForm"/>
             </div>
-            <custom-card :card-class="cardClass" v-for="resource in resources" :key="resource.id">
-                <pdf-resource-content :resource="resource" @editResource="editResource"/>
+
+            <custom-card resource-type="pdf"
+                         :resource="resource"
+                         :card-class="cardClass"
+                         v-for="resource in resources"
+                         :key="resource.id"
+                         @editResource="editResource">
+                <pdf-resource-content :resource="resource"/>
             </custom-card>
-            <paginator :to="routeName" subscribe-to="pdf"/>
+            <paginator :to="routeName"/>
         </div>
         <no-resource resource-type="PDF file" to-name="pdf-resource-create" v-else/>
 
@@ -44,35 +31,18 @@ import CustomIcon from '../../../components/CustomIcon'
 import CustomButton from '../../../components/CustomButton'
 import { mapGetters } from 'vuex'
 import Paginator from '../../../components/Paginator'
-import store from '../../../store/store'
 import PdfResourceContent from '../../../components/PdfResourceContent'
 import CustomInput from '../../../components/CustomInput'
 import { required } from 'vuelidate/lib/validators'
 import PdfResourceForm from '../../../components/PdfResourceForm'
 import EventBus from '../../../event-bus'
-
-function getResources (routeTo, next) {
-    const page = parseInt(routeTo.query.page)
-    const limit = parseInt(routeTo.query.limit)
-    store
-        .dispatch('pdf/list', {
-            limit: routeTo.query.limit,
-            page: page
-        })
-        .then((response) => {
-            store
-                .dispatch('paginate/setPagination', {
-                    total: response.meta.total,
-                    page: page,
-                    limit: limit
-                })
-            routeTo.params.page = page
-            next()
-        })
-}
+import { RoutingMixin } from '../../../mixins/routingMixin'
+import IndexContainer from '../../../components/IndexContainer'
 
 export default {
+    mixins: [RoutingMixin],
     components: {
+        IndexContainer,
         PdfResourceContent,
         Paginator,
         NoResource,
@@ -107,12 +77,6 @@ export default {
             }
         }
     },
-    beforeRouteEnter (routeTo, routeFrom, next) {
-        getResources(routeTo, next)
-    },
-    beforeRouteUpdate (routeTo, routeFrom, next) {
-        getResources(routeTo, next)
-    },
     methods: {
         editResource (pdfResource) {
             this.isEditing = true
@@ -120,7 +84,7 @@ export default {
                 id: pdfResource.data.id,
                 title: pdfResource.data.attributes.title,
             }
-            this.$store.dispatch('pdf/setFileName','')
+            this.$store.dispatch('pdf/setFileName', '')
         },
         submitForm (pdfResource) {
             this.$store
@@ -132,10 +96,10 @@ export default {
                         query: { limit: this.pagination.limit, page: this.pagination.page },
                         params: { page: this.pagination.page }
                     }).catch(error => {
-                        if (error.name !== "NavigationDuplicated") {
-                            throw error;
+                        if (error.name !== 'NavigationDuplicated') {
+                            throw error
                         }
-                    });
+                    })
                     this.refreshPdfResource()
                 })
                 .catch((e) => {
