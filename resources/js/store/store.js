@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import * as user from './modules/user'
 import * as pdf from './modules/pdf'
 import * as paginate from './modules/paginate'
+import * as snippet from './modules/snippet'
+
 import VuexPersist from 'vuex-persist'
 
 Vue.use(Vuex)
@@ -23,7 +25,8 @@ export default new Vuex.Store({
     modules: {
         user,
         pdf,
-        paginate
+        paginate,
+        snippet
     },
     plugins: [vuexLocalStorage.plugin],
 })

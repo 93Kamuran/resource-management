@@ -18,8 +18,8 @@ export default new VueRouter({
         {
             path: '/pdf-resources',
             name: 'pdf-resources',
-            meta: { layout: 'default' },
-            props:true,
+            meta: { layout: 'default', module: 'pdf' },
+            props: true,
             component: () => import('./views/Resources/Pdf/index')
         },
         {
@@ -27,6 +27,19 @@ export default new VueRouter({
             name: 'pdf-resource-create',
             meta: { layout: 'default' },
             component: () => import('./views/Resources/Pdf/create')
+        },
+        {
+            path: '/html-snippets',
+            name: 'html-snippets',
+            meta: { layout: 'default', module: 'snippet' },
+            props: true,
+            component: () => import('./views/Resources/HtmlSnippet/index')
+        },
+        {
+            path: '/html-snippets/create',
+            name: 'html-snippet-create',
+            meta: { layout: 'default' },
+            component: () => import('./views/Resources/HtmlSnippet/create')
         }
     ]
 })
