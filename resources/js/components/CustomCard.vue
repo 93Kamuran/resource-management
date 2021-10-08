@@ -1,6 +1,6 @@
 <template>
     <div v-bind="$attrs" :class="cardClass" class="container mx-auto
-       box-content   hover:h-34 w-3/4  hover:shadow-lg
+       box-content rounded-md hover:h-34 w-3/4  hover:shadow-lg
        shadow-md bg-white
        items-center p-10 justify-center">
         <div>

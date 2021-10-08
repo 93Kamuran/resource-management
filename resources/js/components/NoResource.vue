@@ -1,7 +1,7 @@
 <template>
     <div class="w-full  h-96 flex items-center justify-center">
         <div
-            class="w-full h-full bg-gray-50  text-center border shadow-sm rounded-sm text-xl h-full
+            class="w-full h-full bg-gray-50  text-center border shadow-sm rounded-sm text-l h-full
              text-gray-600 pt-48">
             No {{ resourceType }} registered yet.
             <div class="justify-center my-6" v-if="userType ==='admin'">
