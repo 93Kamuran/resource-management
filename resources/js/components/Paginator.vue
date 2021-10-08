@@ -31,10 +31,6 @@ export default {
         to: {
             type: String,
             required: true
-        },
-        subscribeTo: {
-            type: String,
-            required: true
         }
     },
     computed: {
