@@ -17,7 +17,7 @@ class CreateHtmlSnippetsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->string('html');
+            $table->longText('html');
             $table->timestamps();
         });
     }
