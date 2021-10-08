@@ -7,7 +7,6 @@ export default {
         return apiClient.get(`${resource}?limit=${perPage}&page=${page}`)
     },
     post (link) {
-debugger
         return apiClient.post(`${resource}`, link)
     },
     update (link) {
