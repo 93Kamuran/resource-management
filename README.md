@@ -35,4 +35,8 @@ Generate your application encryption key:
 $ php artisan key:generate
 ```
 
- 
+#### Open the application in a browser
+```sh
+$ php artisan serve
+$ npm run watch
+```
