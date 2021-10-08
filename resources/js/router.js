@@ -40,6 +40,19 @@ export default new VueRouter({
             name: 'html-snippet-create',
             meta: { layout: 'default' },
             component: () => import('./views/Resources/HtmlSnippet/create')
+        },
+        {
+            path: '/links',
+            name: 'links',
+            meta: { layout: 'default', module: 'link' },
+            props: true,
+            component: () => import('./views/Resources/Link/index')
+        },
+        {
+            path: '/links/create',
+            name: 'link-create',
+            meta: { layout: 'default' },
+            component: () => import('./views/Resources/Link/create')
         }
     ]
 })

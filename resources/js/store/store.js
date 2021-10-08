@@ -5,6 +5,7 @@ import * as user from './modules/user'
 import * as pdf from './modules/pdf'
 import * as paginate from './modules/paginate'
 import * as snippet from './modules/snippet'
+import * as link from './modules/link'
 
 import VuexPersist from 'vuex-persist'
 
@@ -26,7 +27,8 @@ export default new Vuex.Store({
         user,
         pdf,
         paginate,
-        snippet
+        snippet,
+        link
     },
     plugins: [vuexLocalStorage.plugin],
 })
